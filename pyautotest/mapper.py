@@ -1,4 +1,5 @@
 import os.path
+from pyautotest import importutil
 
 
 def from_config(config):
@@ -18,7 +19,7 @@ def from_config(config):
     ValueError: Unknown test mapper: None
     """
     if config.get('test_mapper_module'):
-        mod = __import__(config['test_mapper_module'])
+        mod = importutil.import_module(config['test_mapper_module'])
         return mod.get_mapper(config['basepath'])
 
     name = config.get('test_mapper_name')

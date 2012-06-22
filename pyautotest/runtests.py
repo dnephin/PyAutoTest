@@ -132,12 +132,12 @@ def get_config(opts):
         with open(opts.config, 'r') as fh:
             config.update(yaml.load(fh))
 
+    config.validate()
     config.update(config_defaults)
     config['path']      = os.path.abspath(config['path'])
     basepath            = config.get('basepath') or config['path']
     config['basepath']  = os.path.abspath(basepath)
 
-    config.validate()
     return config
 
 

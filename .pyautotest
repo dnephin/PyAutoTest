@@ -1,4 +1,11 @@
 # Configuration for running pyautotest on itself
 
 test_mapper_name:   'doctest'
-command:            ['python', '-m', 'doctest']
+test_runner_name:   'doctest'
+
+# Example of a custom command
+#command:            ['python', '-m', 'doctest', '-v']
+
+# Examples of using an extension module
+#test_mapper_module:     'pyautotest.extension'
+#test_runner_module:     'pyautotest.extension'
