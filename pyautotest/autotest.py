@@ -57,7 +57,8 @@ class Config(dict):
         'test_runner_module',
         'command',
         'test_package_name',
-        'file_filter_name'
+        'file_filter_name',
+        'file_filter_module'
     ]
 
     def update(self, d=None, **fields):
