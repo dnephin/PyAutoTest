@@ -1,9 +1,13 @@
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
+version = 0, 1
 
 setup(
     name            ='PyAutoTest',
-    version         =0.1,
+    version         ='.'.join(str(i) for i in version),
     description     ='Automatically run tests when files are modified.',
     author          ='Daniel Nephin',
     author_email    ='dnephin@gmail.com',
