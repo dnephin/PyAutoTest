@@ -1,3 +1,5 @@
+from pyautotest import importutil
+
 
 class FileFilter(object):
     """Determine if the changed file should be tested or not."""
@@ -20,3 +22,12 @@ class FileFilter(object):
         False
         """
         return filename.endswith('.py')
+
+
+filter_map = {
+    'python':       FileFilter
+}
+
+
+from_config = importutil.from_config_factory(
+        'file_filter', 'get_filter', filter_map)

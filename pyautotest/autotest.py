@@ -33,6 +33,7 @@ def parse_args():
             ' requires arguments.')
     parser.add_option('-c', '--config', default='.pyautotest',
         help='Config file to use. Defaults to %default in the basepath dir.')
+    parser.add_option('-v', '--verbose', action='store_true')
     opts, args = parser.parse_args()
 
     if opts.basepath:
@@ -54,7 +55,9 @@ class Config(dict):
         'test_mapper_module',
         'test_runner_name',
         'test_runner_module',
-        'command'
+        'command',
+        'test_package_name',
+        'file_filter_name'
     ]
 
     def update(self, d=None, **fields):
@@ -102,11 +105,12 @@ class Config(dict):
             raise ConfigException(msg % both)
 
 
-def setup_logging():
+def setup_logging(opts):
     root_logger         = logging.getLogger()
     handler             = logging.StreamHandler()
+    level               = logging.DEBUG if opts.verbose else logging.WARN
     root_logger.addHandler(handler)
-    root_logger.setLevel(logging.INFO)
+    root_logger.setLevel(level)
 
 
 config_defaults = {
@@ -114,7 +118,7 @@ config_defaults = {
     'no_recursive':     'False',
     'test_mapper_name': 'standard',
     'test_runner_name': 'file',
-    'command':          ['python']
+    'file_filter_name': 'python',
 }
 
 
@@ -155,13 +159,15 @@ class FileModifiedMonitor(FileSystemEventHandler):
 
 
 def main():
-    setup_logging()
     opts, _         = parse_args()
-    config          = get_config(opts)
+    setup_logging(opts)
 
+    config          = get_config(opts)
     file_filter     = filefilter.FileFilter
-    test_mapper     = mapper.from_config(config)
+    mapper_class    = mapper.from_config(config)
     runner_class    = runner.from_config(config)
+    test_mapper     = mapper_class(
+                        config['basepath'], config.get('test_package_name'))
     test_runner     = runner_class(file_filter, test_mapper, config['command'])
     event_handler   = FileModifiedMonitor(test_runner)
     observer        = Observer()

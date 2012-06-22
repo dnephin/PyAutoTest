@@ -2,32 +2,6 @@ import os.path
 from pyautotest import importutil
 
 
-def from_config(config):
-    """Map the filename of a source file to the name of the test for that file.
-    >>> c = {'test_mapper_name': 'doctest', 'basepath': '/'}
-    >>> from_config(c)    # doctest: +ELLIPSIS
-    <mapper.DocTestMapper object at ...>
-
-    >>> from_config({'test_mapper_name': 'unknown'})
-    Traceback (most recent call last):
-        ...
-    ValueError: Unknown test mapper: unknown
-
-    >>> from_config({})
-    Traceback (most recent call last):
-        ...
-    ValueError: Unknown test mapper: None
-    """
-    if config.get('test_mapper_module'):
-        mod = importutil.import_module(config['test_mapper_module'])
-        return mod.get_mapper(config['basepath'])
-
-    name = config.get('test_mapper_name')
-    if name not in mapper_name_map:
-        raise ValueError("Unknown test mapper: %s" % name)
-    return mapper_name_map[name](config['basepath'])
-
-
 class DocTestMapper(object):
     """Map modified files to their test name."""
 
@@ -50,11 +24,12 @@ class StandardMapper(object):
             tests/runner/stuff_test.py
     """
 
-    test_package = 'tests'
+    default_test_package = 'tests'
     test_file_extension = '_test.py'
 
-    def __init__(self, basepath):
-        self.basepath = basepath
+    def __init__(self, basepath, test_package=None):
+        self.basepath       = basepath
+        self.test_package   = test_package or self.default_test_package
 
     def strip_basepath(self, filename):
         """
@@ -124,3 +99,6 @@ mapper_name_map = {
     'doctest':      DocTestMapper,
     'standard':     StandardMapper,
 }
+
+from_config = importutil.from_config_factory(
+        'test_mapper', 'get_mapper', mapper_name_map)
