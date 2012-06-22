@@ -154,7 +154,7 @@ class FileModifiedMonitor(FileSystemEventHandler):
         self.test_runner.run(event.src_path)
 
 
-if __name__ == "__main__":
+def main():
     setup_logging()
     opts, _         = parse_args()
     config          = get_config(opts)
@@ -178,3 +178,6 @@ if __name__ == "__main__":
     finally:
         observer.stop()
         observer.join()
+
+if __name__ == "__main__":
+    main()
