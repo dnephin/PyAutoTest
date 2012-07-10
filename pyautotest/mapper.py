@@ -5,7 +5,7 @@ from pyautotest import importutil
 class DocTestMapper(object):
     """Map modified files to their test name."""
 
-    def __init__(self, _):
+    def __init__(self, *args):
         pass
 
     def get_test_filename(self, filename):
