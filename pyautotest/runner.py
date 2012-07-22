@@ -60,13 +60,19 @@ class PyTestRunner(FileTestRunner):
     default_command = ['py.test']
 
 
+class FullSuiteRunner(FileTestRunner):
+
+    def run_test(self, test_name):
+        subprocess.call(self.command)
+
 test_runner_map = {
     'file':         FileTestRunner,
     'unittest':     ModuleRunner,
     'doctest':      DocTestRunner,
     'testify':      TestifyRunner,
     'unittest2':    UnitTest2Runner,
-    'pytest':       PyTestRunner
+    'pytest':       PyTestRunner,
+    'full_suite':   FullSuiteRunner,
 }
 
 from_config = importutil.from_config_factory(
