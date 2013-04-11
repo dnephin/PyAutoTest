@@ -21,6 +21,7 @@ class FileTestRunner(object):
             log.info("Ignoring not testable file: %s", filename)
             return
 
+        log.info("Running test for source file: %s", filename)
         test_filename = self.test_mapper.get_test_filename(filename)
         if not os.path.isfile(test_filename):
             log.warn("Missing test for %s. Expected at %s",
@@ -31,6 +32,7 @@ class FileTestRunner(object):
         self.run_test(test_name)
 
     def run_test(self, test_name):
+        log.info("Running test: %s", test_name)
         subprocess.call(self.command + [test_name])
 
     def get_test_name(self, filename):
