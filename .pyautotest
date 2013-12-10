@@ -4,7 +4,7 @@ test_mapper_name:   'doctest'
 test_runner_name:   'doctest'
 
 # Example of a custom command
-#command:            ['python', '-m', 'doctest', '-v']
+command:            ['python', '-m', 'doctest', '-v']
 
 # Examples of using an extension module
 #test_mapper_module:     'pyautotest.extension'

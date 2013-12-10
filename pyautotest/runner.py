@@ -32,7 +32,7 @@ class FileTestRunner(object):
         self.run_test(test_name)
 
     def run_test(self, test_name):
-        log.info("Running test: %s", test_name)
+        log.info("Running test: %s", self.command + [test_name])
         subprocess.call(self.command + [test_name])
 
     def get_test_name(self, filename):

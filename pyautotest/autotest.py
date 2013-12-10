@@ -164,7 +164,7 @@ def main():
     setup_logging(opts)
 
     config          = get_config(opts)
-    file_filter     = filefilter.FileFilter
+    file_filter     = filefilter.from_config(config)
     mapper_class    = mapper.from_config(config)
     runner_class    = runner.from_config(config)
     test_mapper     = mapper_class(
@@ -172,6 +172,14 @@ def main():
     test_runner     = runner_class(file_filter, test_mapper, config['command'])
     event_handler   = FileModifiedMonitor(test_runner)
     observer        = Observer()
+
+    log.info(
+        "Running with filter=%s, mapper=%s, runner=%s, path=%s, basepath=%s",
+        file_filter,
+        test_mapper,
+        test_runner,
+        config['path'],
+        config['basepath'])
 
     observer.schedule(
             event_handler, path=config['path'], recursive=not opts.no_recursive)

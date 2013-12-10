@@ -11,6 +11,8 @@ class DocTestMapper(object):
     def get_test_filename(self, filename):
         return filename
 
+    def __str__(self):
+        return "DocTestMapper()"
 
 class StandardMapper(object):
     """Expects that tests are located in a matching directory structure as
@@ -93,6 +95,10 @@ class StandardMapper(object):
 
         filename = self.swap_base_package(filename)
         return self.replace_extension(filename)
+
+    def __str__(self):
+        return "StandardMapper(basepath=%s, test_package=%s)" % (self.basepath,
+                                                                 self.test_package)
 
 
 mapper_name_map = {
