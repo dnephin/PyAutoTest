@@ -14,6 +14,7 @@ class DocTestMapper(object):
     def __str__(self):
         return "DocTestMapper()"
 
+
 class StandardMapper(object):
     """Expects that tests are located in a matching directory structure as
     source where the top level package is tests, and the file names have

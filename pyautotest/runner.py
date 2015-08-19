@@ -62,10 +62,21 @@ class PyTestRunner(FileTestRunner):
     default_command = ['py.test']
 
 
-class FullSuiteRunner(FileTestRunner):
+class FullSuiteRunner(object):
+    default_command = ['python']
 
-    def run_test(self, test_name):
+    def __init__(self, file_filter, _test_mapper, command=None):
+        self.file_filter = file_filter
+        self.command = command or self.default_command
+
+    def run(self, filename):
+        if not self.file_filter.should_test(filename):
+            log.info("Ignoring not testable file: %s", filename)
+            return
+
+        log.info("Running: %s", self.command)
         subprocess.call(self.command)
+
 
 test_runner_map = {
     'file':         FileTestRunner,
