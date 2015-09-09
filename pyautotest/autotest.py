@@ -73,7 +73,7 @@ class Config(dict):
         4
         """
         fields = fields or d
-        for key, value in fields.iteritems():
+        for key, value in fields.items():
             if key in self and self[key]:
                 continue
             self[key] = value
@@ -90,7 +90,7 @@ class Config(dict):
         Traceback (most recent call last):
         ConfigException: You may only use one test runner. Got: a and b
         """
-        for key, value in self.iteritems():
+        for key, value in self.items():
             if key not in Config.valid_keys:
                 msg = "Unexpected entry in config: %s: %s"
                 raise ConfigException(msg % (key, value))
