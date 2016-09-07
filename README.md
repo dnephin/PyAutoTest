@@ -12,10 +12,10 @@ using the `-c` option.
 See `.pyautotest` in this repo for an example configuration.
 
 
-Requirements
-------------
+Install
+-------
 
-Requires `watchdog` (http://pypi.python.org/pypi/watchdog).
+    pip install yapyautotest
 
 
 Configuration
