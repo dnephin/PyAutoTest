@@ -1,7 +1,7 @@
 import logging
 import os.path
 import subprocess
-from pyautotest import importutil
+from yapyautotest import importutil
 
 log = logging.getLogger(__name__)
 

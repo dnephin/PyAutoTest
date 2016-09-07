@@ -1,5 +1,5 @@
 import os.path
-from pyautotest import importutil
+from yapyautotest import importutil
 
 
 class DocTestMapper(object):

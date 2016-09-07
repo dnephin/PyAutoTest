@@ -5,7 +5,7 @@ import time
 import optparse
 import yaml
 
-from pyautotest import filefilter, mapper, runner
+from yapyautotest import filefilter, mapper, runner
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
